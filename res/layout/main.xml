@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title" />
+
+    <GridView
+        android:id="@+id/gridView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="3" >
+
+    </GridView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom" >
+
+        <Button
+            android:id="@+id/fourByFour"
+            android:layout_width="fill_parent"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:onClick="button_onClick"
+            android:text="4x4" />
+        
+        <Button
+            android:id="@+id/fourByFive"
+            android:layout_width="fill_parent"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:onClick="button_onClick"
+            android:text="4x5" />
+                
+        <Button
+            android:id="@+id/fiveBySix"
+            android:layout_width="fill_parent"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:onClick="button_onClick"
+            android:text="5x6" />
+        
+        <Button
+            android:id="@+id/sixBySix"
+            android:layout_width="fill_parent"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:onClick="button_onClick"
+            android:text="6x6" />
+        
+    </LinearLayout>
+
+</LinearLayout>
