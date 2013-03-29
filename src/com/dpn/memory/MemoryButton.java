@@ -13,12 +13,13 @@ public class MemoryButton<T> extends ViewAnimator {
 	private final MemoryGameManager<T> mManager;
 	private final Button mHiddenButton;
 	private final Button mResultButton;
+	private final Button mMatchedButton;
 	
 	public MemoryButton(Context context, int pPosition, T pItem, MemoryGameManager<T> pGameManager) {
 		super(context);
 		mPosition = pPosition;
 		mManager = pGameManager;
-		setInAnimation( AnimationUtils.loadAnimation(context, R.anim.flip_from_side));
+		setInAnimation(AnimationUtils.loadAnimation(context, R.anim.flip_from_side));
 		setOutAnimation(AnimationUtils.loadAnimation(context, R.anim.flip_to_side));
 		
 		mHiddenButton = new Button(context);
@@ -29,15 +30,27 @@ public class MemoryButton<T> extends ViewAnimator {
 		mHiddenButton.setPadding(0, mHiddenButton.getPaddingTop()-10, 0,mHiddenButton.getPaddingBottom()-10);
 		mHiddenButton.setBackgroundResource(R.drawable.button_shape);
 		mHiddenButton.setOnClickListener(new ButtonPressed());
-		 mResultButton = new Button(context);
+		addView(mHiddenButton);
+		
+		mResultButton = new Button(context);
 		mResultButton.setText(pItem.toString());
 		mResultButton.setTextColor(Color.LTGRAY);
 		mResultButton.setTextSize(32);
 		mResultButton.setBackgroundColor(Color.BLUE);
 		mResultButton.setPadding(0, mResultButton.getPaddingTop()-10, 0,mResultButton.getPaddingBottom()-10);
         mResultButton.setBackgroundResource(R.drawable.button_shape);
-		addView(mHiddenButton);
 		addView(mResultButton);
+		
+		mMatchedButton = new Button(context);
+		mMatchedButton.setText("");
+		mMatchedButton.setTextColor(Color.BLACK);
+		mMatchedButton.setTextSize(32);
+		mMatchedButton.setBackgroundResource(R.drawable.button_shape);
+		mMatchedButton.setBackgroundColor(Color.BLACK);
+		mMatchedButton.setPadding(0, mMatchedButton.getPaddingTop()-10, 0,mMatchedButton.getPaddingBottom()-10);
+		mMatchedButton.setClickable(false);
+		addView(mMatchedButton);
+		
 	}
 	public int getPosition() {
 		return mPosition;
@@ -50,12 +63,7 @@ public class MemoryButton<T> extends ViewAnimator {
 		setDisplayedChild(0);
 	}
 	public void removeButton(){
-		mHiddenButton.setBackgroundColor(Color.BLACK);
-		mHiddenButton.setText("");
-		mHiddenButton.setClickable(false);
-		
-		mResultButton.setBackgroundColor(Color.BLACK);
-		mResultButton.setText("");
+		setDisplayedChild(2);
 	}
     private class ButtonPressed implements OnClickListener{
     	
