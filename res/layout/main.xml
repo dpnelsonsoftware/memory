@@ -16,6 +16,12 @@
         android:numColumns="3" >
 
     </GridView>
+    
+      <TextView
+        android:id="@+id/playCounter"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="aaa" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"

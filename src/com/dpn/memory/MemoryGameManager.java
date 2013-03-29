@@ -18,15 +18,18 @@ public class MemoryGameManager<T> {
 	private final int mCols;
 	private final int mRows;
 	private final List<T> mLetters;
+	private final IMemoryGameManagerListener mView;
+	private int mPlayCount;
 	
 	private MemoryButton<T> mButtonOne;
 	private MemoryButton<T> mButtonTwo;
 	
-	public MemoryGameManager(int pCols, int pRows, List<T> pLetters, Activity pActivity) {
+	public MemoryGameManager(int pCols, int pRows, List<T> pLetters, IMemoryGameManagerListener pActivity) {
 		mCols = pCols;
 		mRows = pRows;
 		mLetters = pLetters;
 		itemsRemaining = pLetters.size();
+		mView = pActivity;
 	}
 
 	public int getNumColumns() {
@@ -56,6 +59,7 @@ public class MemoryGameManager<T> {
 				mButtonTwo = pBtn;
 				revealButton(mButtonTwo);
 				mState = EState.TWO_PRESSED;
+				mView.playCountChanged(++mPlayCount);
 				if(itemsRemaining == 2){
 					checkForMatch();
 				}
@@ -91,14 +95,10 @@ public class MemoryGameManager<T> {
 		pBtn.hideButton();
 	}
 	private void removeButton(MemoryButton<T> pBtn){
-		
-		
-		
-		
-		
-		
-		
-		
 		pBtn.removeButton();
+	}
+	
+	public interface IMemoryGameManagerListener{
+		void playCountChanged(int pPlayCount);
 	}
 }

@@ -1,11 +1,14 @@
 package com.dpn.memory;
 
+import com.dpn.memory.MemoryGameManager.IMemoryGameManagerListener;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.TextView;
 
-public class MemoryActivity extends Activity {
+public class MemoryActivity extends Activity implements IMemoryGameManagerListener {
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,8 +47,16 @@ public class MemoryActivity extends Activity {
 		
 	}
     private void startNewGame(int pCols, int pRows) {
+    	playCountChanged(0);
     	mManager = new MemoryGameManager<ELetters>(pCols, pRows,ELetters.getRandomList(pCols*pRows), this);
     	populateGrid();
 	}
+	
 	private MemoryGameManager<ELetters> mManager;
+	
+	@Override
+	public void playCountChanged(int pPlayCount) {
+		TextView playCounter = (TextView)this.findViewById(R.id.playCounter);
+		playCounter.setText("Play Count: " + Integer.toString(pPlayCount));
+	}
 }
