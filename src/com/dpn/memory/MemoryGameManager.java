@@ -2,8 +2,6 @@ package com.dpn.memory;
 
 import java.util.List;
 
-import android.app.Activity;
-
 public class MemoryGameManager<T> {
 	
 	private enum EState{
@@ -21,8 +19,8 @@ public class MemoryGameManager<T> {
 	private final IMemoryGameManagerListener mView;
 	private int mPlayCount;
 	
-	private MemoryButton<T> mButtonOne;
-	private MemoryButton<T> mButtonTwo;
+	private int mButtonOne;
+	private int mButtonTwo;
 	
 	public MemoryGameManager(int pCols, int pRows, List<T> pLetters, IMemoryGameManagerListener pActivity) {
 		mCols = pCols;
@@ -44,7 +42,7 @@ public class MemoryGameManager<T> {
 	}
 
 	
-	public void buttonPressed(MemoryButton<T> pBtn){
+	public void buttonPressed(int pBtn){
 		
 		switch(mState){
 			case TWO_PRESSED:
@@ -72,8 +70,8 @@ public class MemoryGameManager<T> {
 	
 	
 	private void checkForMatch() {
-		T buttonOnePayload = getItemAtPosition(mButtonOne.getPosition());
-		T buttonTwoPayload = getItemAtPosition(mButtonTwo.getPosition());
+		T buttonOnePayload = mLetters.get(mButtonOne);
+		T buttonTwoPayload = mLetters.get(mButtonTwo);
 		if(buttonOnePayload.equals(buttonTwoPayload)){
 			removeButton(mButtonOne);
 			removeButton(mButtonTwo);
@@ -87,18 +85,20 @@ public class MemoryGameManager<T> {
 		}
 	}
 
-	private void revealButton(MemoryButton<T> pBtn){
-		pBtn.revealButton();
-
+	private void revealButton(int pBtn){
+		mView.revealButton(pBtn);
 	}
-	private void hideButton(MemoryButton<T> pBtn){
-		pBtn.hideButton();
+	private void hideButton(int pBtn){
+		mView.hideButton(pBtn);
 	}
-	private void removeButton(MemoryButton<T> pBtn){
-		pBtn.removeButton();
+	private void removeButton(int pBtn){
+		mView.removeButton(pBtn);
 	}
 	
 	public interface IMemoryGameManagerListener{
 		void playCountChanged(int pPlayCount);
+		void revealButton(int pIndex);
+		void hideButton(int pIndex);
+		void removeButton(int pIndex);
 	}
 }

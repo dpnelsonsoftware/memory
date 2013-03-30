@@ -15,7 +15,7 @@ public class MemoryButton<T> extends ViewAnimator {
 	private final Button mResultButton;
 	private final Button mMatchedButton;
 	
-	public MemoryButton(Context context, int pPosition, T pItem, MemoryGameManager<T> pGameManager) {
+	public MemoryButton(Context context, int pPosition, MemoryGameManager<T> pGameManager) {
 		super(context);
 		mPosition = pPosition;
 		mManager = pGameManager;
@@ -33,7 +33,7 @@ public class MemoryButton<T> extends ViewAnimator {
 		addView(mHiddenButton);
 		
 		mResultButton = new Button(context);
-		mResultButton.setText(pItem.toString());
+		mResultButton.setText(pGameManager.getItemAtPosition(pPosition).toString());
 		mResultButton.setTextColor(Color.LTGRAY);
 		mResultButton.setTextSize(32);
 		mResultButton.setBackgroundColor(Color.BLUE);
@@ -69,8 +69,7 @@ public class MemoryButton<T> extends ViewAnimator {
     	
 		@Override
 		public void onClick(View v) {
-			System.out.println("BUTTON PRESSED");
-			mManager.buttonPressed(MemoryButton.this);
+			mManager.buttonPressed(mPosition);
 		}
     }
     

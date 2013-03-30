@@ -1,5 +1,8 @@
 package com.dpn.memory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.dpn.memory.MemoryGameManager.IMemoryGameManagerListener;
 
 import android.app.Activity;
@@ -10,6 +13,9 @@ import android.widget.TextView;
 
 public class MemoryActivity extends Activity implements IMemoryGameManagerListener {
     /** Called when the activity is first created. */
+	
+	List<MemoryButton<ELetters>> mButtons;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,8 +28,14 @@ public class MemoryActivity extends Activity implements IMemoryGameManagerListen
     	gridView.setNumColumns(mManager.getNumColumns());
     	gridView.setVerticalSpacing(5);
     	gridView.setHorizontalSpacing(5);
-    	gridView.setAdapter(new TextAdapter(this, mManager));
     	
+    	
+    	mButtons = new ArrayList<MemoryButton<ELetters>>();
+    	for(int i=0; i<mManager.getNumberOfItems(); i++){
+    		mButtons.add(new MemoryButton<ELetters>(this, i, mManager));
+    	}
+    	
+    	gridView.setAdapter(new TextAdapter(mButtons));
     }
     
     public void button_onClick(View view) {
@@ -58,5 +70,20 @@ public class MemoryActivity extends Activity implements IMemoryGameManagerListen
 	public void playCountChanged(int pPlayCount) {
 		TextView playCounter = (TextView)this.findViewById(R.id.playCounter);
 		playCounter.setText("Play Count: " + Integer.toString(pPlayCount));
+	}
+
+	@Override
+	public void revealButton(int pIndex) {
+		mButtons.get(pIndex).revealButton();
+	}
+
+	@Override
+	public void hideButton(int pIndex) {
+		mButtons.get(pIndex).hideButton();
+	}
+
+	@Override
+	public void removeButton(int pIndex) {
+		mButtons.get(pIndex).removeButton();
 	}
 }
